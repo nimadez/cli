@@ -1,0 +1,14 @@
+Windows Registry Editor Version 5.00
+
+[HKEY_CLASSES_ROOT\Applications\python.exe\shell\open\command]
+@="\"D:\\SDK\Python\\python.exe\" \"%1\" %*"
+
+[HKEY_CLASSES_ROOT\py_auto_file]
+@="Python File"
+[HKEY_CLASSES_ROOT\py_auto_file\shell\open\command]
+@="\"D:\\SDK\Python\\python.exe\" \"%1\" %*"
+
+[HKEY_CLASSES_ROOT\Python.File]
+@="Python File"
+[HKEY_CLASSES_ROOT\Python.File\Shell\Open\Command]
+@="\"D:\\SDK\Python\\python.exe\" \"%1\" %*"
