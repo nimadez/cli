@@ -1,0 +1,23 @@
+.panel-hwinfo {
+    font-size: 13px;
+    font-weight: normal;
+    font-family: monospace;
+    text-align: center;
+}
+
+.panel-hwinfo-label0 {
+    color: aqua;
+    width: 35px;
+}
+.panel-hwinfo-label1 {
+    color: palegreen;
+    width: 35px;
+}
+.panel-hwinfo-label2 {
+    color: slategray;
+    width: 35px;
+}
+.panel-hwinfo-label3 {
+    color: slategray;
+    width: 35px;
+}

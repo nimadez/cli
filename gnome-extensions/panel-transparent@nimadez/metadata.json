@@ -1,0 +1,8 @@
+{
+    "name": "Panel Transparency",
+    "description": "Add transparency to panel",
+    "shell-version": [ "44", "43", "42" ],
+    "url": "https://github.com/nimadez/cli",
+    "uuid": "panel-transparent@nimadez",
+    "version": 1
+}

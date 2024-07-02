@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+  	<title>Node File Server</title>
+	<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📂</text></svg>" />
+	<style>
+		body { font-family: monospace; margin: 10px; }
+		a, a:visited { color: steelblue; text-decoration: none; }
+		a:hover { color: blue; }
+		h1 { font-size: 20px; }
+		button { background: steelblue; color: white; padding: 10px; border: none; border-radius: 5px; text-align: center; cursor: pointer; }
+		ul { background: #eee; padding: 5px; border-radius: 5px; margin: 0; list-style: none; }
+		ul li { font-size: 14px; font-weight: bold; }
+		#path { font-size: 11px; color: #666; padding: 5px; letter-spacing: 0.1em; }
+		.unsupported a { color: gray; }
+	</style>
+</head>
+<body>
+	<h1>Node File Server</h1>
+	<button onclick="document.getElementById('upload').click()">UPLOAD</button>
+	<div id="path">></div>
+	<ul id="list"></ul>
+	<input style="display:none" id="upload" type="file" onchange="uploadFile(event)">
+</body>
+<script>
+	loadFiles();
+
+	function loadFiles() {
+		const xhr = new XMLHttpRequest();
+		xhr.open('GET', '/list', true);
+		xhr.onreadystatechange = function () {
+			if (xhr.readyState == 4) {
+				if (xhr.status == 200) {
+					const res = JSON.parse(xhr.responseText);
+					if (res.length > 0) {
+						let data = "";
+						for (let i = 0; i < res.length; i++) {
+							if (res[i].startsWith('/')) {
+								data += `<li class='unsupported'><a href='/download${res[i]}'>${res[i]}</a></li>`;
+							} else {
+								data += `<li><a href='/download/${res[i]}'>${res[i]}</a></li>`;
+							}
+						}
+						document.getElementById('list').innerHTML = data;
+						getPath();
+					}
+				}
+			}
+		}
+		xhr.send();
+	}
+
+	function uploadFile(evt) {
+		const target = evt.target || evt.srcElement || evt.currentTarget;
+		const file = target.files[0];
+		const xhr = new XMLHttpRequest();
+		xhr.open('POST', '/upload/' + file.name, true);
+		xhr.setRequestHeader('Content-Type', 'application/octate-stream');
+		xhr.onreadystatechange = function () {
+			evt = null;
+			if (xhr.readyState == 4) {
+				if (xhr.status == 200) {
+					loadFiles();
+				} else {
+					console.log('Unable to Upload');
+				}
+			}
+		}
+		xhr.send(file);
+	}
+
+	function getPath() {
+		const xhr = new XMLHttpRequest();
+		xhr.open('GET', '/path', true);
+		xhr.onreadystatechange = function () {
+			if (xhr.readyState == 4) {
+				if (xhr.status == 200) {
+					const res = JSON.parse(xhr.responseText);
+					if (res.length > 0) {
+						document.getElementById('path').innerHTML = res;
+					} else {
+						document.getElementById('path').innerHTML = 'Unable to resolve path';
+					}
+				}
+			}
+		}
+		xhr.send();
+	}
+</script>
+</html>

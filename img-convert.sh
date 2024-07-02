@@ -1,0 +1,9 @@
+#!/bin/bash
+
+if [ $# -eq 2 ]; then
+    dname=$(dirname "$1")
+    fname=$(basename "$1")
+    /media/$USER/local/apps/magick convert "$1" -define icon:auto-resize=256,128,64,32 "$dname/${fname%.*}.$2"
+else
+    echo help: img-convert.sh [./path_to_image.ext] [jpg, png, gif, ico ...]
+fi

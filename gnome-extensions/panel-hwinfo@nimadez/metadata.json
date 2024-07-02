@@ -1,0 +1,8 @@
+{
+    "name": "Panel Hardware Info",
+    "description": "Add hardware monitor to panel",
+    "shell-version": [ "44", "43", "42" ],
+    "url": "https://github.com/nimadez/cli",
+    "uuid": "panel-hwinfo@nimadez",
+    "version": 1
+}
