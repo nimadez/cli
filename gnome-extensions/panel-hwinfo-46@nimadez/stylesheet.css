@@ -1,0 +1,24 @@
+.panel-transparency {
+    background-color: rgba(0, 0, 0, 0.15);
+    box-shadow: none;
+}
+
+.panel-hwinfo {
+    font-size: 13px;
+    text-align: center;
+}
+
+.panel-hwinfo-label-cpu {
+    color: #37c0ff;
+    width: 90px;
+    letter-spacing: 0.11em;
+}
+.panel-hwinfo-label-gpu {
+    color: palegreen;
+    width: 90px;
+    letter-spacing: 0.11em;
+}
+.panel-hwinfo-label-mem {
+    width: 90px;
+    letter-spacing: 0.11em;
+}

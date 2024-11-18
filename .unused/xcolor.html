@@ -1,0 +1,180 @@
+<!-- Q1 2022 @nimadez -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <meta name="description" content="A basic color picker and eyedropper" />
+    <meta name="author" content="@nimadez" />
+    <title>X Color</title>
+    <style>
+        * { margin: 0; padding: 0; border: none; outline: none; }
+        body { background-color: #343c49; font-family: monospace; cursor: default; }
+        input[type=color] { width: 100px; height: 74px; border: none; vertical-align: middle; border-radius: 10px; }
+        input[type=color]::-webkit-color-swatch-wrapper { padding: 0; border-radius: 10px; }
+        input[type=color]::-webkit-color-swatch { border: solid 1px #343c49; border-radius: 4px; }
+        input[type=color]:hover { cursor: pointer; }
+        input[type=text] { background: silver; color: #333; border: none; width: 160px; margin-bottom: 3px; padding: 3px; font-size: 14px; font-weight: bold; border-radius: 4px; text-align: center; }
+        input[type=text]:hover { background: skyblue; }
+        button { width: 20px; background: silver; border: solid 1px #ccc; font-size: 11px; padding: 2px; border-radius: 4px; cursor: pointer; }
+        button:hover { background: skyblue; }
+        #content { position: absolute; width: 310px; height: 110px; left: 50%; top: 50%; margin-left: -150px; margin-top: -50px; }
+        #inputs { width: 200px; height: 100px; position: absolute; left: 105px; top: 0; display: block; }
+        #eyedrop { width: 100px; height: 22px; font-size: 12px; background: #8c99af; border: none; }
+        #eyedrop:hover { background: skyblue; }
+        #row { display: flexbox; width: 100px; line-height: 2.8em; }
+  </style>
+</head>
+<body>
+    <div id="content">
+        <div id="row">
+            <input id="inputcolor" type="color" value="#CD5C5C">
+            <button onclick="activateEyedropper()" id="eyedrop">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18px" height="18px" viewBox="0 0 24 24" fill="#222"><path d="M0 0h24v24H0z" fill="none"/><path d="M20.71 5.63l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-3.12 3.12-1.93-1.91-1.41 1.41 1.42 1.42L3 16.25V21h4.75l8.92-8.92 1.42 1.42 1.41-1.41-1.92-1.92 3.12-3.12c.4-.4.4-1.03.01-1.42zM6.92 19L5 17.08l8.06-8.06 1.92 1.92L6.92 19z"/></svg>
+            </button>
+        </div>
+        <div id="inputs">
+            <input id="hex" type="text"> <button onclick="clipboard(HEX.value)">C</button>
+            <input id="hexint" type="text"> <button onclick="clipboard(HEXi.value)">C</button>
+            <input id="rgbint" type="text"> <button onclick="clipboard(RGBi.value)">C</button>
+            <input id="rgbfloat" type="text"> <button onclick="clipboard(RGBf.value)">C</button>
+        </div>
+    </div>
+</body>
+<script>
+    const input = document.getElementById('inputcolor');
+    const HEX = document.getElementById('hex');
+    const HEXi = document.getElementById('hexint');
+    const RGBi = document.getElementById('rgbint');
+    const RGBf = document.getElementById('rgbfloat');
+    const eyeDropper = new EyeDropper();
+
+    let color = input.value.toUpperCase();
+    HEX.value = color;
+    HEXi.value = color.replace('#', '0x');
+    RGBi.value = `${hexToRgbInt(color).r}, ${hexToRgbInt(color).g}, ${hexToRgbInt(color).b}`;
+    RGBf.value = `${hexToRgbFloat(color).r}, ${hexToRgbFloat(color).g}, ${hexToRgbFloat(color).b}`;
+
+    input.addEventListener("input", (ev) => {
+        color = input.value.toUpperCase();
+        HEX.value = color;
+        HEXi.value = color.replace('#', '0x');
+        RGBi.value = `${hexToRgbInt(color).r}, ${hexToRgbInt(color).g}, ${hexToRgbInt(color).b}`;
+        RGBf.value = `${hexToRgbFloat(color).r}, ${hexToRgbFloat(color).g}, ${hexToRgbFloat(color).b}`;
+    }, false);
+
+    HEX.addEventListener("input", (ev) => {
+        color = HEX.value.toUpperCase();
+        if (validateHex(color)) {
+            HEXi.value = color.replace('#', '0x');
+            RGBi.value = `${hexToRgbInt(color).r}, ${hexToRgbInt(color).g}, ${hexToRgbInt(color).b}`;
+            RGBf.value = `${hexToRgbFloat(color).r}, ${hexToRgbFloat(color).g}, ${hexToRgbFloat(color).b}`;
+            input.value = color;
+        }
+    }, false);
+
+    HEXi.addEventListener("input", (ev) => {
+        color = HEXi.value.replace('0x', '#').toUpperCase();
+        if (validateHex(color)) {
+            HEX.value = color;
+            RGBi.value = `${hexToRgbInt(color).r}, ${hexToRgbInt(color).g}, ${hexToRgbInt(color).b}`;
+            RGBf.value = `${hexToRgbFloat(color).r}, ${hexToRgbFloat(color).g}, ${hexToRgbFloat(color).b}`;
+            input.value = color;
+        }
+    }, false);
+
+    RGBi.addEventListener("input", (ev) => {
+        const c = RGBi.value.replace(/ /g, '');
+        if (c.split(',').length == 3) {
+            color = rgbIntToHex(c.split(',')[0], c.split(',')[1], c.split(',')[2]);
+            if (validateHex(color)) {
+                HEX.value = color;
+                RGBf.value = `${hexToRgbFloat(color).r}, ${hexToRgbFloat(color).g}, ${hexToRgbFloat(color).b}`;
+                input.value = color;
+            }
+        }
+    }, false);
+
+    RGBf.addEventListener("input", (ev) => {
+        const c = RGBf.value.replace(/ /g, '');
+        if (c.split(',').length == 3) {
+            color = rgbFloatToHex(c.split(',')[0], c.split(',')[1], c.split(',')[2]);
+            if (validateHex(color)) {
+                HEX.value = color;
+                RGBi.value = `${hexToRgbInt(color).r}, ${hexToRgbInt(color).g}, ${hexToRgbInt(color).b}`;
+                input.value = color;
+            }
+        }
+    }, false);
+
+    function activateEyedropper() {
+        eyeDropper.open().then(res => {
+            color = res.sRGBHex.toUpperCase();
+            // fix eyedropper in linux systems (sRGBHex return RGBA)
+            if (color.startsWith('RGBA')) {
+                const rgb = color.match(/\d+/g);
+                color = rgbIntToHex(rgb[0], rgb[1], rgb[2]);
+            }
+            HEX.value = color;
+            HEXi.value = color.replace('#', '0x');
+            RGBi.value = `${hexToRgbInt(color).r}, ${hexToRgbInt(color).g}, ${hexToRgbInt(color).b}`;
+            RGBf.value = `${hexToRgbFloat(color).r}, ${hexToRgbFloat(color).g}, ${hexToRgbFloat(color).b}`;
+            input.value = color;
+        }).catch(err => {
+            //
+        });
+    }
+
+    function validateHex(hex) {
+        return /^#[0-9A-F]{6}$/i.test(hex);
+    }
+
+    function rgbIntToHex(r, g, b) {
+        const hr = Math.max(0, Math.min(255, r)).toString(16);
+        const hg = Math.max(0, Math.min(255, g)).toString(16);
+        const hb = Math.max(0, Math.min(255, b)).toString(16);
+        return ("#" +
+            (hr.length<2?"0":"") + hr +
+            (hg.length<2?"0":"") + hg +
+            (hb.length<2?"0":"") + hb).toUpperCase();
+    }
+
+    function rgbFloatToHex(r, g, b) {
+        const hr = Math.max(0, Math.min(255, Math.round(r * 255))).toString(16);
+        const hg = Math.max(0, Math.min(255, Math.round(g * 255))).toString(16);
+        const hb = Math.max(0, Math.min(255, Math.round(b * 255))).toString(16);
+        return ("#" +
+            (hr.length<2?"0":"") + hr +
+            (hg.length<2?"0":"") + hg +
+            (hb.length<2?"0":"") + hb).toUpperCase();
+    }
+
+    function hexToRgbInt(hex) {
+        const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+        return result ? {
+            r: parseInt(result[1], 16),
+            g: parseInt(result[2], 16),
+            b: parseInt(result[3], 16)
+        } : null;
+    }
+
+    function hexToRgbFloat(hex) {
+        const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+        return result ? {
+            r: (parseInt(result[1], 16) / 255).toFixed(3),
+            g: (parseInt(result[2], 16) / 255).toFixed(3),
+            b: (parseInt(result[3], 16) / 255).toFixed(3)
+        } : null;
+    }
+
+    function clipboard(str) {
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.value = str;
+        document.body.appendChild(input);
+        input.select();
+        document.execCommand('copy'); //@deprecated
+        document.body.removeChild(input);
+    }
+</script>
+</html>
