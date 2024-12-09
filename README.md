@@ -84,6 +84,7 @@ If you do mostly painting, you can replace GIMP with Krita.
 
 ## History
 ```
+↑ Celebrating 1 year with Linux as my OS on my PC! 🎂
 ↑ Wine requirement reduced to zero, migration completed
 ↑ Debian Assistant CLI
 ↑ Q1 2024 - Migrating to Debian Linux after 30 years of MS-DOS/Win32
