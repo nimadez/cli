@@ -74,16 +74,10 @@ How to run these scripts system wide?
 sh install.sh
 * This will symlink scripts to "/usr/local/bin" and remove extensions.
 ```
-What is the alternative to Photoshop in Linux?
-```
-The best choice is to integrate GIMP for bitmap work and
-Inkscape for vector work, you can even share the design
-between the two, so you have the best of both worlds.
-If you do mostly painting, you can replace GIMP with Krita.
-```
 
 ## History
 ```
+↑ Celebrating 1 year with Linux on my PC! 🎂
 ↑ Wine requirement reduced to zero, migration completed
 ↑ Debian Assistant CLI
 ↑ Q1 2024 - Migrating to Debian Linux after 30 years of MS-DOS/Win32
