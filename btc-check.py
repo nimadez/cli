@@ -8,7 +8,7 @@ import json
 import requests
 
 
-TUNNELPROXY = 'http://localhost:8118'
+TUNNELPROXY = 'http://127.0.0.1:8118'
 HEADERS = {'User-Agent':'Mozilla/5.0 (iPhone; CPU iPhone OS 13_4_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.1 Mobile/15E148 Safari/604.1'}
 BC_INVALID = '{"error":"not-found-or-invalid-arg","message":"Item not found or argument invalid"}'
 BS_INVALID = 'Invalid Bitcoin address'

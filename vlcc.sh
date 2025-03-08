@@ -8,5 +8,5 @@ else
     echo help: vlcc.sh [path, url, .xspf playlist]
 
     read -p "press enter to play radio stream ..." p
-    cvlc -I ncurses https://kathy.torontocast.com:1825/stream
+    cvlc -I ncurses https://streamssl.chilltrax.com:80/stream/1/
 fi
