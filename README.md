@@ -23,8 +23,9 @@ Add hardware info and transparency to panel<br>
 ## FAQ
 How to install Debian with GNOME core desktop?
 ```
+Last update: Jan-2025 (debian-12.9.0)
+
 0- [Disable Secure Boot]
-   - Optional, but you have to sign the drivers manually
    $ sudo mokutil --disable-validation
 1- [Install Debian]
    - Select "Expert Install"
@@ -54,36 +55,16 @@ How to install Debian with GNOME core desktop?
    purge-hard.sh              # purge ~/.cache if you don't keep permanent files there
 
 * Remember to reinstall kernel headers after every kernel update
-* The above has been updated in reinstallation on Nov-2024
-
-**************************************************
-NOTICE: nvidia-kernel-dkms bug (driver 535/545, introduced in Aug 2024)
-The nvidia kernel module fails to compile with linux-image-6.10.x in recent
-Debian updates in testing/unstable (trixie/sid) and backported branches.
-https://www.mail-archive.com/debian-bugs-dist@lists.debian.org/msg1988571.html
-https://www.mail-archive.com/debian-bugs-dist@lists.debian.org/msg1983502.html
-https://www.mail-archive.com/debian-bugs-dist@lists.debian.org/msg1984969.html
-If you need nvidia-driver, you need to switch back to the stable branch (bookworm)
-or target kernel 6.9.x which is not safe in terms of security issues.
-
-Based on the above, I recommend installing option "3" in step 4 (stable-proposed).
-**************************************************
 ```
 How to run these scripts system wide?
 ```
 sh install.sh
 * This will symlink scripts to "/usr/local/bin" and remove extensions.
 ```
-What is the alternative to Photoshop in Linux?
-```
-The best choice is to integrate GIMP for bitmap work and
-Inkscape for vector work, you can even share the design
-between the two, so you have the best of both worlds.
-If you do mostly painting, you can replace GIMP with Krita.
-```
 
 ## History
 ```
+↑ Celebrating 1 year with Linux on my PC! 🎂
 ↑ Wine requirement reduced to zero, migration completed
 ↑ Debian Assistant CLI
 ↑ Q1 2024 - Migrating to Debian Linux after 30 years of MS-DOS/Win32
