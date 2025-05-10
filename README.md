@@ -5,10 +5,9 @@
 **Debian Assistant CLI**<br>
 Kernel 6.1.0 to 6.9.12
 
-This repository contains a variety of scripts for working with the Debian OS and the Linux kernel.
-<br>*All scripts have a brief comment, along with a simple guide if no arguments are entered. But it requires some software expertise and you need to understand what you are doing.*
+This repository contains a variety of scripts for working with the Debian OS and the Linux kernel, from installation to everyday scripts.
 
-⚠️ *This repository is not optimized for the end-user in any way, and does not contain any binary files.*
+###### All scripts have a brief comment, along with a simple guide if no arguments are entered. But it requires some software expertise and you need to understand what you are doing.<br>*This repository is not optimized for the end-user in any way, and does not contain any binary files.*
 
 ### Directories
 > - **.patch**: rarely used system scripts
