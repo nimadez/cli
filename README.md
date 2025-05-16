@@ -68,12 +68,6 @@ sh install.sh
 ```
 
 ## Myths
-Is Windows more secure than Linux?
-```
-Security is a relative issue, its branches are so broad that
-in reality no system is secure, but any system can be
-considered secure under certain circumstances.
-```
 Can you wipe the system using the command ```sudo rm -rf```?
 ```
 No, early in the process, before reaching the HOME directory,
