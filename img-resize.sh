@@ -7,5 +7,5 @@ if [ $# -eq 2 ]; then
     fname=$(basename "$1")
     /media/$USER/local/apps/magick convert "$1" -resize $2! "$dname/${fname%.*}_resize.${fname##*.}"
 else
-    echo help: img-resize.sh [path] [512x512/50%]
+    echo help: img-resize.sh [path] [512x512, 50%]
 fi

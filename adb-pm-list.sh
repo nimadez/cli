@@ -11,5 +11,5 @@ if [ $# -eq 1 ]; then
         adb shell pm list packages -f
     fi
 else
-    echo help: adb-pm-list.sh [all/enabled/disabled]
+    echo help: adb-pm-list.sh [all, enabled, disabled]
 fi
