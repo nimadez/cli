@@ -18,8 +18,8 @@ if [ $# -eq 1 ]; then
     elif [ "$1" == "i386" ]; then
         dpkg -l | grep i386
     else
-        echo help: apt-list.sh [all/installed/backports/contrib/non-free/non-free-firmware/i386]
+        echo help: apt-list.sh [all, installed, backports, contrib, non-free, non-free-firmware, i386]
     fi
 else
-    echo help: apt-list.sh [all/installed/backports/contrib/non-free/non-free-firmware/i386]
+    echo help: apt-list.sh [all, installed, backports, contrib, non-free, non-free-firmware, i386]
 fi

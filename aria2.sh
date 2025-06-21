@@ -1,6 +1,7 @@
 #!/bin/bash
 #
 # Aria2c downloader with built-in config file
+# optional http proxy supported
 
 cat > ~/.cache/aria2c.conf <<EOF
 dir=/home/$USER/Downloads
@@ -39,7 +40,11 @@ EOF
 if [ $# -eq 1 ]; then
     aria2c --conf-path=/home/$USER/.cache/aria2c.conf "$1"
 else
-    echo help: aria2.sh [link/magnet/.torrent]
+    if [ $# -eq 2 ]; then
+        aria2c --conf-path=/home/$USER/.cache/aria2c.conf --all-proxy="$2" "$1"
+    else
+        echo help: aria2.sh [link/magnet/.torrent] [optional proxy:port]
+    fi
 fi
 
 rm ~/.cache/aria2c.conf
