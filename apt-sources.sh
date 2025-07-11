@@ -5,12 +5,6 @@
 # You need all these keys for the drivers to work properly
 KEYS="contrib non-free non-free-firmware"
 
-read -p "Run mirror benchmark (y)? " bench
-if [ "$bench" = "y" ]; then
-    sudo apt -y install netselect-apt
-    sudo netselect-apt
-fi
-
 read -p "Mirror URL (enter=http://deb.debian.org/debian/): " mirror
 if [ "$mirror" = "" ]; then
     mirror="http://deb.debian.org/debian/"
@@ -92,9 +86,4 @@ deb $mirror unstable main $KEYS
 deb-src $mirror unstable main $KEYS
 EOF
 echo;echo saved to /etc/apt/sources.list
-fi
-
-read -p "run 'sudo apt update' (y)? " up
-if [ "$up" = "y" ]; then
-    sudo apt update
 fi
