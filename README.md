@@ -8,7 +8,7 @@ Branch: Bookworm, Trixie (testing)
 
 This repository contains a variety of scripts for working with the Debian OS and the Linux kernel, from installation to everyday scripts.
 
-###### All scripts have a brief comment, along with a simple guide if no arguments are entered. But it requires some software expertise and you need to understand what you are doing. *This repository is not optimized for the end-user in any way, and does not contain any binary files.*
+###### This repository is not optimized for the end-user in any way, and does not contain any binary files.
 
 ### Directories
 > - **.unused**: unused scripts
