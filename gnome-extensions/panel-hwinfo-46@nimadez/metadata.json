@@ -1,0 +1,8 @@
+{
+    "name": "Panel Hardware Info",
+    "description": "Add hardware info and transparency to panel",
+    "shell-version": [ "46" ],
+    "url": "https://github.com/nimadez/cli",
+    "uuid": "panel-hwinfo-46@nimadez",
+    "version": 1
+}
