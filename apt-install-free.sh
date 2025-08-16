@@ -4,8 +4,6 @@
 
 sudo apt -y install --no-install-recommends \
     curl aria2 rsync vlc libimage-exiftool-perl mkisofs \
-    fonts-noto-color-emoji fonts-dejavu fonts-dejavu-extra fonts-droid-fallback fonts-noto-mono fonts-urw-base35 \
-    gstreamer1.0-plugins-good \
     \
     git git-gui gitk build-essential cmake nodejs \
     python3-dev python3-pip python3-venv \
@@ -13,12 +11,15 @@ sudo apt -y install --no-install-recommends \
     systemd-resolved iptables openssh-server wpasupplicant \
     tcpdump iftop privoxy \
     \
-    libfuse2 libevent-2.1-7 \
-    \
     qemu-system qemu-system-gui qemu-utils \
     libvirt-clients libvirt-daemon-system \
     \
-    xterm
+    fonts-noto-color-emoji fonts-dejavu fonts-dejavu-extra fonts-droid-fallback fonts-noto-mono fonts-urw-base35 \
+    gstreamer1.0-plugins-good \
+    \
+    xterm zenity \
+    \
+    libfuse2 libevent-2.1-7
 
 # setup systemd-resolved
 sudo systemctl enable systemd-resolved
