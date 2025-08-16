@@ -1,0 +1,13 @@
+#!/bin/bash
+#
+# Make python3 from source directory
+#
+# additional packages: libbz2-dev libffi-dev libssl-dev liblzma-dev libncurses-dev ...
+
+if [ $# -eq 1 ]; then
+    cd $1
+    ./configure --enable-optimizations --prefix=$(pwd)/build
+    make && make install
+else
+    echo "help: make-python.sh [src]"
+fi
