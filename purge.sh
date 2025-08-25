@@ -1,0 +1,79 @@
+#!/bin/bash
+#
+# Purge
+
+# Temporarily free up memory, but also slowdown as the system rebuilds
+purge_mem() {
+    sudo sync; echo 3 | sudo tee /proc/sys/vm/drop_caches &>/dev/null
+    sudo swapoff -a && sudo swapon -a
+}
+
+# Flush DNS cache and restart networks
+purge_net() {
+    sudo resolvectl flush-caches
+    sudo systemctl restart networking
+    sudo systemctl restart NetworkManager
+    while ! ping -c 1 "8.8.8.8" &>/dev/null; do
+        sleep 1
+    done
+    sudo systemctl restart rinetd
+}
+
+purge_history() {
+    > ~/.bash_history
+    > ~/.python_history
+    > ~/.node_repl_history
+}
+
+purge_apt() {
+    sudo apt autoremove --purge &>/dev/null
+    sudo apt autoclean
+    sudo apt clean
+}
+
+# Flush __pycache__
+purge_pycache() {
+    cd /
+    sudo python3 -Bc "import pathlib; [p.unlink() for p in pathlib.Path('.').rglob('*.py[co]')]"
+    sudo python3 -Bc "import pathlib; [p.rmdir() for p in pathlib.Path('.').rglob('__pycache__')]"
+}
+
+purge_cache() {
+    rm -rf ~/.cache
+    sudo rm -rf /tmp/*
+    sudo rm -rf /var/tmp/*
+}
+
+echo "0. Memory     (caution)"
+echo "1. Network    (safe)"
+echo "2. History    (safe)"
+echo "3. Temp Soft  (safe)"
+echo "4. Temp Hard  (unsafe, incl. ~/.cache)"
+read -p ":  " p
+
+if [ "$p" = "0" ]; then
+    echo "Purging memory ..."
+    purge_mem
+elif [ "$p" = "1" ]; then
+    echo "Purging network ..."
+    purge_net
+elif [ "$p" = "2" ]; then
+    echo "Purging history ..."
+    purge_history
+    purge_apt
+elif [ "$p" = "3" ]; then
+    echo "Purging temp (soft) ..."
+    purge_history
+    purge_apt
+    purge_pycache
+elif [ "$p" = "4" ]; then
+    echo "Purging temp (hard) ..."
+    purge_history
+    purge_apt
+    purge_pycache
+    purge_cache
+else
+    exit 0
+fi
+
+echo "done"
