@@ -14,12 +14,12 @@
 
 
 ### Minimal Debian Installation
-Kernel: ```6.12.41```<br>
+Kernel: ```6.12.43```<br>
 Release: ```Debian 13 Trixie```<br>
 Desktop: ```GNOME 48 (gnome-shell, ~300 MB deb)```<br>
 Display servers: ```X11 (default)``` ```Wayland (testing)```<br>
 Total download: ```~700 MB deb without CUDA```<br>
-Last installation: ```25-Aug-2025 (13.0.0-amd64-DVD)```<br>
+Last installation: ```30-Aug-2025 (13.0.0-amd64-DVD)```<br>
 Installation time: ```~30 minutes (3-5 Mb/s)```<br>
 Known issues: ```none```
 ```
@@ -128,8 +128,8 @@ Known issues: ```none```
    $ cp /etc/skel/.bashrc ~   # if the home partition is formatted, copy the .bashrc file
    $ sudo reboot
 ```
+> - **Remember to reinstall kernel headers after every kernel update.** (this is absolutely needed in Trixie)
 > - All steps and scripts are updated with each installation to include any missing changes.
-> - Remember to reinstall kernel headers after every kernel update. ("testing" branch only)
 > - Download size for GNOME includes shared packages and can be much smaller. (up to 50%)
 > - The CUDA toolkit is about 2 GB in size and can be ignored and installed later.
 > - You can skip step 6 and use pure Debian via the command-line.
