@@ -3,8 +3,12 @@
 //
 // I first wrote this program in a gnome-extension (it was slow),
 // then it was written in bash (it wasn't accurate and a bit slow, bash version: .trash/hw-xmon.sh),
-// and now it's written in C, which is significantly faster!
-// (mem usage from ~380-480 KB to only ~100 KB)
+// and now it's written in C, which is significantly more responsive!
+//
+// - Mem usage from ~380-480 KB multiple-processes -> to only ~100 KB single-process
+// - There is no startup delay (3s to 0s)
+// - Display network rate in KB/s per second instead of bytes
+// - The only resource consumption of this program is xterm itself! (5.7 MB memory)
 //
 // To make it even better, there are a few things that can be done later:
 // - calculating the time difference in CPU usage in 1 second
@@ -26,13 +30,15 @@
 #include <time.h>
 
  
+#define MAX_BUFFER_LEN 1024
+
 const char* cpu_thermal_zone = "/sys/class/thermal/thermal_zone2/temp";
 const char* net_interface = "wlx"; // (enp: ethernet | wlx: wifi)
 
 
 void get_cpu_usage(float *cpu_usage) {
     FILE *fp;
-    char buffer[1024];
+    char buffer[MAX_BUFFER_LEN];
     unsigned long long user, nice, system, idle, iowait, irq, softirq, steal;
     unsigned long long total_idle, total_non_idle, total;
     static unsigned long long prev_total = 0, prev_idle = 0;
@@ -66,7 +72,7 @@ void get_cpu_usage(float *cpu_usage) {
 
 void get_cpu_temp(int *cpu_temp) {
     FILE *fp;
-    char buffer[1024];
+    char buffer[MAX_BUFFER_LEN];
     int temp;
     
     fp = fopen(cpu_thermal_zone, "r");
@@ -85,7 +91,7 @@ void get_cpu_temp(int *cpu_temp) {
 
 void get_gpu_usage(float *usage, float *mem_usage, int *temp, int *fan_speed) {
     FILE *fp;
-    char buffer[1024];
+    char buffer[MAX_BUFFER_LEN];
     char *token;
     int gpu_usage = 0;
     int gpu_mem_total = 0;
@@ -125,7 +131,7 @@ void get_gpu_usage(float *usage, float *mem_usage, int *temp, int *fan_speed) {
 
 void get_mem_usage(float *mem_usage) {
     FILE *fp;
-    char buffer[1024];
+    char buffer[MAX_BUFFER_LEN];
     unsigned long long total_mem, free_mem, buffers, cached, sreclaimable, shmem, sunreclaim;
 
     fp = fopen("/proc/meminfo", "r");
@@ -169,7 +175,7 @@ void get_mem_usage(float *mem_usage) {
 
 void get_swap_usage(float *swap_usage) {
     FILE *fp;
-    char buffer[1024];
+    char buffer[MAX_BUFFER_LEN];
     unsigned long long total_swap, free_swap;
     
     fp = fopen("/proc/meminfo", "r");
@@ -201,7 +207,7 @@ void get_swap_usage(float *swap_usage) {
 
 void get_network_rate(double *rx_rate, double *tx_rate) {
     FILE *fp;
-    char buffer[1024];
+    char buffer[MAX_BUFFER_LEN];
     char interface[32];
     unsigned long long rx_bytes, tx_bytes;
     static unsigned long long prev_rx_bytes = 0, prev_tx_bytes = 0;
@@ -256,6 +262,9 @@ int main() {
     int cpu_temp, gpu_temp, gpu_fan_speed;
     float cpu_usage, mem_usage, swap_usage, gpu_usage, gpu_mem_usage;
     double rx_rate, tx_rate;
+
+    printf("\e[?25l"); // hide cursor
+    fflush(stdout);
     
     while (1) {
         get_cpu_usage(&cpu_usage);
@@ -266,11 +275,10 @@ int main() {
         get_network_rate(&rx_rate, &tx_rate);
         
         fputs("\033[H\033[2J", stdout);
-        printf("\033[96mCPU  %.1f%%  %d°C\033[0m\n", cpu_usage, cpu_temp);
-        printf("\033[92mGPU  %.1f%%  %d°C  %.1f%%  %d%%\033[0m\n", gpu_usage, gpu_temp, gpu_mem_usage, gpu_fan_speed);
+        printf("\033[96mCPU  %.1f%%  %d°c\033[0m\n", cpu_usage, cpu_temp);
+        printf("\033[92mGPU  %.1f%%  %d°c  %.1f%%  %d%%\033[0m\n", gpu_usage, gpu_temp, gpu_mem_usage, gpu_fan_speed);
         printf("\033[93mMEM  %.1f%% (%.1f%%)\033[0m\n", mem_usage, swap_usage);
         printf("\033[97mNET  ↓ %.1f ↑ %.1f KB/s\033[0m", rx_rate/1024, tx_rate/1024);
-        printf("\e[?25l"); // hide cursor
         fflush(stdout);
         
         sleep(1.5);
