@@ -1,0 +1,130 @@
+# GIMP sessionrc
+# 
+# This file takes session-specific info (that is info, you want to keep
+# between two GIMP sessions).  You are not supposed to edit it manually, but
+# of course you can do.  The sessionrc will be entirely rewritten every time
+# you quit GIMP.  If this file isn't found, defaults are used.
+
+(session-info "toplevel"
+    (factory-entry "gimp-empty-image-window")
+    (position 200 100)
+    (size 640 480))
+(session-info "toplevel"
+    (factory-entry "gimp-single-image-window")
+    (position 0 32)
+    (size 1920 1001)
+    (open-on-exit)
+    (aux-info
+        (left-docks-width "52")
+        (right-docks-width "304")
+        (maximized "yes"))
+    (gimp-toolbox
+        (side left))
+    (gimp-dock
+        (side right)
+        (book
+            (current-page 0)
+            (dockable "gimp-color-editor"
+                (tab-style preview)
+                (aux-info
+                    (current-page "ColorselWheel")))
+            (dockable "gimp-navigation-view"
+                (tab-style icon)
+                (aux-info
+                    (show-button-bar "true")))
+            (dockable "gimp-histogram-editor"
+                (tab-style icon))
+            (dockable "gimp-channel-list"
+                (tab-style icon)
+                (preview-size 32)
+                (aux-info
+                    (show-button-bar "true")))
+            (dockable "gimp-font-list"
+                (tab-style preview)
+                (aux-info
+                    (show-button-bar "true")))
+            (dockable "gimp-gradient-list"
+                (tab-style preview)
+                (aux-info
+                    (show-button-bar "true"))))
+        (book
+            (position 358)
+            (current-page 0)
+            (dockable "gimp-layer-list"
+                (tab-style icon)
+                (preview-size 32)
+                (aux-info
+                    (show-button-bar "true")))
+            (dockable "gimp-tool-options"
+                (tab-style preview)
+                (aux-info
+                    (show-button-bar "true")))
+            (dockable "gimp-vectors-list"
+                (tab-style icon)
+                (preview-size 32)
+                (aux-info
+                    (show-button-bar "true")))
+            (dockable "gimp-brush-grid"
+                (tab-style preview)
+                (aux-info
+                    (show-button-bar "true")))
+            (dockable "gimp-symmetry-editor"
+                (tab-style icon))
+            (dockable "gimp-undo-history"
+                (tab-style icon)
+                (aux-info
+                    (show-button-bar "true"))))))
+(session-info "toplevel"
+    (factory-entry "gimp-preferences-dialog")
+    (position 301 141)
+    (size 1017 759))
+(session-info "toplevel"
+    (factory-entry "gimp-input-devices-dialog")
+    (position 26 379))
+(session-info "toplevel"
+    (factory-entry "gimp-module-dialog")
+    (position 26 261)
+    (size 430 509))
+(session-info "toplevel"
+    (factory-entry "gimp-file-open-dialog")
+    (position 26 32)
+    (size 861 646))
+(session-info "toplevel"
+    (factory-entry "gimp-operation-tool-dialog")
+    (position 869 268))
+(session-info "toplevel"
+    (factory-entry "gimp-keyboard-shortcuts-dialog")
+    (position 90 224)
+    (size 789 617))
+(session-info "toplevel"
+    (factory-entry "gimp-toolbox-color-dialog")
+    (position 707 325))
+(session-info "toplevel"
+    (factory-entry "gimp-action-search-dialog")
+    (position 479 210)
+    (size 168 34))
+(session-info "toplevel"
+    (factory-entry "gimp-file-export-dialog")
+    (position 144 240)
+    (size 861 646))
+(session-info "toplevel"
+    (factory-entry "gimp-file-save-dialog")
+    (position 26 32)
+    (size 861 646))
+(session-info "toplevel"
+    (factory-entry "gimp-image-new-dialog")
+    (position 26 32))
+(session-info "toplevel"
+    (factory-entry "gimp-gradient-tool-dialog")
+    (position 1412 78))
+(session-info "toplevel"
+    (factory-entry "gimp-gegl-tool-dialog")
+    (position 208 194))
+
+(hide-docks no)
+(single-window-mode yes)
+(show-tabs yes)
+(tabs-position 0)
+(last-tip-shown 0)
+
+# end of sessionrc

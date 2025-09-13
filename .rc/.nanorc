@@ -1,0 +1,31 @@
+# ~/.nanorc configuration file
+
+set titlecolor white,blue
+set statuscolor black,cyan
+set errorcolor white,red
+set selectedcolor white,magenta
+set numbercolor gray
+set promptcolor white,blue
+set functioncolor gray
+set keycolor cyan
+
+unset mouse                         # Enable mouse support
+unset nonewlines                    # Add newlines to the ends of files
+unset softwrap
+
+set linenumbers
+set autoindent
+set tabstospaces
+set tabsize 4
+set casesensitive                   # Enable case-sensitive search
+
+set whitespace "»·"                 # Highlight trailing whitespace
+set matchbrackets "(<[{)>]}"        # Enable bracket matching
+set historylog                      # Save the last hundred search strings
+set multibuffer                     # Enable multibuffer for multiple open files
+
+include "/usr/share/nano/*.nanorc"  # Include syntax highlighting
+
+# Keybindings
+#bind ^S savefile main
+#bind ^Q quit main
